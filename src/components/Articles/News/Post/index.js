@@ -1,43 +1,58 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { URL } from "../../../../config";
-import Header from "./header";
-import Body from "./body";
-import styles from "../../articles.css";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { URL } from '../../../../config';
 
-class NewsArtcles extends Component {
-  state = {
-    article: [],
-    team: []
-  };
+import styles from '../../articles.css';
+import Header from './header';
 
-  componentWillMount() {
-    axios
-      .get(`${URL}/articles?id=${this.props.match.params.id}`)
-      .then(response => {
-        let article = response.data[0];
+class NewsArticles extends Component {
 
-        axios.get(`${URL}/teams?id=${article.team}`).then(response => {
-          this.setState({ article, team: response.data });
-        });
-      });
-  }
+    state = {
+        article:[],
+        team:[]
+    }
 
-  render() {
-    const article = this.state.article;
-    const team = this.state.team;
+    componentWillMount(){
+        axios.get(`${URL}/articles?id=${this.props.match.params.id}`)
+        .then( response => {
+            let article = response.data[0];
 
-    return (
-      <div className={styles.articleWrapper}>
-        <Header
-          teamData={team[0]}
-          date={article.date}
-          author={article.author}
-        />
-        <Body />
-      </div>
-    );
-  }
+            axios.get(`${URL}/teams?id=${article.team}`)
+            .then( response => {
+                this.setState({
+                    article,
+                    team:response.data
+                })
+            })
+        })
+    }
+
+
+    render(){
+        const article = this.state.article;
+        const team = this.state.team;
+
+        return(
+            <div className={styles.articleWrapper}>
+                <Header
+                    teamData={team[0]}
+                    date={article.date}
+                    author={article.author}
+                />
+                <div className={styles.articleBody}>
+                    <h1>{article.title}</h1>
+                    <div className={styles.articleImage}
+                        style={{
+                            background:`url('/images/articles/${article.image}')`
+                        }}
+                    ></div>
+                    <div className={styles.articleText}>
+                        {article.body}
+                    </div>
+                </div>
+            </div>
+        )
+    }
 }
 
-export default NewsArtcles;
+export default NewsArticles;
