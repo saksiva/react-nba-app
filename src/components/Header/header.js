@@ -7,13 +7,12 @@ import SideNav from './SideNav/sideNav'
 const Header = (props) => {
   const navBars = () => (
     <div className={style.bars}>
-      <FontAwesome
-        name="bars"
+      <FontAwesome name="bars"
         onClick={props.onOpenNav}
         style={{ color: "#dfdfdf", padding: "10px", cursor: "pointer" }}
       />
     </div>
-  );
+  )
 
   const logo = () => {
     return (
