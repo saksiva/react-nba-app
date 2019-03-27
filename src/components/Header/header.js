@@ -7,7 +7,6 @@ import SideNav from './SideNav/sideNav';
 
 const Header = (props) => {
 
-
     const navBars = () => (
         <div className={style.bars}>
             <FontAwesome name="bars"
